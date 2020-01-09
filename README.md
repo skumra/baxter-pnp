@@ -26,6 +26,12 @@ $ cd ..
 ```
 This pulls down the development branches from all of our repositories into your source directory.
 
+For Baxter Gazebo simulation, checkout the baxter_simulator repository:
+```bash
+$ cd ~/ros_ws/src
+$ git clone https://github.com/RethinkRobotics/baxter_simulator.git
+```
+
 - Check out the Baxter PNP package into your ROS workspace
 ```bash
 $ cd ~/ros_ws/src
@@ -39,6 +45,7 @@ $ source /opt/ros/kinetic/setup.bash
 
 - Build and Install
 ```bash
+$ cd ~/ros_ws
 $ catkin_make
 $ catkin_make install
 ```
@@ -51,6 +58,7 @@ $ cp src/baxter/baxter.sh .
 ## Run PNP in Simulation
 - Run the baxter.sh script with sim specified
 ```bash
+$ cd ~/ros_ws
 $ ./baxter.sh sim
 ```
 
@@ -67,6 +75,7 @@ $ rosrun baxter-pnp run_pnp.py
 ## Run PNP on Robot
 - Run the baxter.sh
 ```bash
+$ cd ~/ros_ws
 $ ./baxter.sh
 ```
 
