@@ -1,3 +1,4 @@
+import os
 import time
 
 import numpy as np
@@ -10,6 +11,10 @@ class Calibration:
     def __init__(self, tool_orientation):
         self.tool_orientation = tool_orientation
         self.robot = Robot()
+
+        homedir = os.path.join(os.path.expanduser('~'), "grasp-comms")
+        self.move_completed = os.path.join(homedir, "move_completed.npy")
+        self.tool_position = os.path.join(homedir, "tool_position.npy")
         
     def run(self):
         # Connect to robot
@@ -23,11 +28,11 @@ class Calibration:
         # Move robot to each calibration point in workspace
         print('Collecting data...')
         while True:
-            if not np.load("move_completed.npy"):
-                tool_position = np.load("tool_position.npy")
+            if not np.load(self.move_completed):
+                tool_position = np.load(self.tool_position)
                 print('Moving to tool position: ', tool_position)
                 pose = get_pose(position=tool_position, orientation=self.tool_orientation)
                 self.robot.move_to(pose)
-                np.save("move_completed.npy", 1)
+                np.save(self.move_completed, 1)
             else:
                 time.sleep(0.1)

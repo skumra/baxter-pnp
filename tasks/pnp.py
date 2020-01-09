@@ -1,4 +1,5 @@
 import copy
+import os
 import time
 
 import numpy as np
@@ -18,6 +19,11 @@ class PickAndPlace:
         self.place_position = place_position
 
         self.robot = Robot()
+
+        homedir = os.path.join(os.path.expanduser('~'), "grasp-comms")
+        self.grasp_request = os.path.join(homedir, "grasp_request.npy")
+        self.grasp_available = os.path.join(homedir, "grasp_available.npy")
+        self.grasp_pose = os.path.join(homedir, "grasp_pose.npy")
 
     def _approach(self, pose):
         """
@@ -87,8 +93,8 @@ class PickAndPlace:
         self.robot.connect()
 
         # Initialize grasp request and grasp available
-        np.save("grasp_request.npy", 0)
-        np.save("grasp_available.npy", 0)
+        np.save(self.grasp_request, 0)
+        np.save(self.grasp_available, 0)
 
         while True:
             # Move robot to home pose
@@ -97,12 +103,12 @@ class PickAndPlace:
             self.robot.open_gripper()
 
             # Get the grasp pose
-            np.save("grasp_request.npy", 1)
+            np.save(self.grasp_request, 1)
             print('Waiting for grasp pose...')
-            while not np.load("grasp_available.npy"):
+            while not np.load(self.grasp_available):
                 time.sleep(0.1)
-            gp = np.load("grasp_pose.npy")
-            np.save("grasp_available.npy", 0)
+            gp = np.load(self.grasp_pose)
+            np.save(self.grasp_available, 0)
 
             # Calculate grasp pose
             grasp_pose = get_pose(position=gp[:3])
