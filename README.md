@@ -26,7 +26,7 @@ $ cd ..
 ```
 This pulls down the development branches from all of our repositories into your source directory.
 
-- Download the baxter pnp package from the git repository
+- Check out the Baxter PNP package into your ROS workspace
 ```bash
 $ cd ~/ros_ws/src
 $ git clone https://github.com/skumra/baxter-pnp.git
