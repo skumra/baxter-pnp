@@ -7,9 +7,7 @@ from utils.transforms import get_pose
 
 
 class Calibration:
-    def __init__(self,
-                 tool_orientation=[-np.pi / 2, 0, 0]
-                 ):
+    def __init__(self, tool_orientation):
         self.tool_orientation = tool_orientation
         self.robot = Robot()
         
