@@ -2,6 +2,7 @@ import os
 import time
 
 import numpy as np
+import rospy
 
 from hardware.robot import Robot
 from utils.transforms import get_pose
@@ -27,7 +28,7 @@ class Calibration:
 
         # Move robot to each calibration point in workspace
         print('Collecting data...')
-        while True:
+        while not rospy.is_shutdown():
             if not np.load(self.move_completed):
                 tool_position = np.load(self.tool_position)
                 print('Moving to tool position: ', tool_position)

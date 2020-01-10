@@ -3,6 +3,7 @@ import os
 import time
 
 import numpy as np
+import rospy
 from geometry_msgs.msg import Pose
 
 from hardware.robot import Robot
@@ -96,7 +97,7 @@ class PickAndPlace:
         np.save(self.grasp_request, 0)
         np.save(self.grasp_available, 0)
 
-        while True:
+        while not rospy.is_shutdown():
             # Move robot to home pose
             print('Moving to start position...')
             self.robot.go_home()
