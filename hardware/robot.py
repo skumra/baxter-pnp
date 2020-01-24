@@ -107,3 +107,8 @@ class Robot:
         """ Move robot to angles """
         joint_angles = dict(zip(self._limb._joint_names[self.limb], angles))
         self.move_joints(joint_angles)
+
+    def get_force(self):
+        """ Returns force at end effector """
+        return self._limb.endpoint_effort()['force']
+
