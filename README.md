@@ -69,6 +69,8 @@ $ roslaunch baxter_gazebo baxter_world.launch
 
 - Start pick and place
 ```bash
+$ cd ~/ros_ws
+$ source devel/setup.bash
 $ rosrun baxter-pnp run_pnp.py
 ```
 
@@ -81,5 +83,7 @@ $ ./baxter.sh
 
 - Start pick and place
 ```bash
+$ cd ~/ros_ws
+$ source devel/setup.bash
 $ rosrun baxter-pnp run_pnp.py
 ```
