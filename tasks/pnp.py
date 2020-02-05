@@ -13,11 +13,22 @@ from utils.transforms import rotate_pose_msg_by_euler_angles, get_pose
 class PickAndPlace:
     def __init__(
             self,
-            hover_distance,
-            place_position
+            place_position,
+            force_threshold=5,
+            hover_distance=0.15,
+            step_size=0.01,
     ):
-        self._hover_distance = hover_distance  # in meters
+        """
+
+        @param place_position: Place position as [x, y, z]
+        @param force_threshold: Z force threshold in Newtons
+        @param hover_distance: Distance above the pose in meters
+        @param step_size: Step size for approaching the pose
+        """
         self.place_position = place_position
+        self.force_threshold = force_threshold
+        self._hover_distance = hover_distance
+        self.step_size = step_size
 
         self.robot = Robot()
 
@@ -28,17 +39,22 @@ class PickAndPlace:
 
     def _approach(self, pose):
         """
-        Approach with a pose the hover-distance above the requested pose
+        Move to a pose with a hover-distance above the requested pose and
+        then move to the pose incrementally while monitoring the z force
         """
         approach = copy.deepcopy(pose)
         approach.position.z = approach.position.z + self._hover_distance
         self.robot.move_to(approach)
 
-    def _servo_to_pose(self, pose):
-        """
-        Servo down to pose
-        """
-        self.robot.move_to(pose)
+        while approach.position.z <= pose.position.z:
+            approach.position.z = approach.position.z - self.step_size
+            self.robot.move_to(approach)
+
+            force = self.robot.get_force()
+            if force.z > self.force_threshold:
+                print(("End Effector Force is: " + str([force.x, force.y, force.z])))
+                print("Max z force reached before reaching the pose")
+                break
 
     def _retract(self):
         """
@@ -64,10 +80,8 @@ class PickAndPlace:
         """
         # open the gripper
         self.robot.open_gripper()
-        # servo above pose
+        # approach to the pose
         self._approach(pose)
-        # servo to pose
-        self._servo_to_pose(pose)
         # close gripper
         self.robot.close_gripper()
         # retract to clear object
@@ -80,10 +94,8 @@ class PickAndPlace:
         # Calculate pose from place position
         pose = get_pose(position=place_position)
 
-        # servo above pose
+        # approach to the pose
         self._approach(pose)
-        # servo to pose
-        self._servo_to_pose(pose)
         # open the gripper
         self.robot.open_gripper()
         # retract to clear object
