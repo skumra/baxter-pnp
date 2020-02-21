@@ -15,7 +15,7 @@ from std_msgs.msg import (
 
 
 class Robot:
-    def __init__(self, workspace_limits=None, limb='left', verbose=True):
+    def __init__(self, workspace_limits=None, limb='right', verbose=True):
         self.workspace_limits = workspace_limits
         self.limb = limb
         self._verbose = verbose
@@ -81,6 +81,10 @@ class Robot:
         """ Open robot gripper """
         self._gripper.open()
         rospy.sleep(1.0)
+
+    def calibrate_gripper(self):
+        """ Calibrate gripper """
+        self._gripper.calibrate()
 
     def move_to(self, pose):
         """ Move robot in cartesian space """

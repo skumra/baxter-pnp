@@ -5,12 +5,11 @@ import numpy as np
 import rospy
 
 from hardware.robot import Robot
-from utils.transforms import get_pose
+from utils.transforms import get_pose, rotate_pose_msg_by_euler_angles
 
 
 class Calibration:
-    def __init__(self, tool_orientation):
-        self.tool_orientation = tool_orientation
+    def __init__(self):
         self.robot = Robot()
 
         homedir = os.path.join(os.path.expanduser('~'), "grasp-comms")
@@ -32,8 +31,9 @@ class Calibration:
             if not np.load(self.move_completed):
                 tool_position = np.load(self.tool_position)
                 print('Moving to tool position: ', tool_position)
-                pose = get_pose(position=tool_position, orientation=self.tool_orientation)
-                self.robot.move_to(pose)
+                pose = get_pose(position=tool_position)
+                pose_rot = rotate_pose_msg_by_euler_angles(pose, 0, np.pi/3, -np.pi/3)
+                self.robot.move_to(pose_rot)
                 np.save(self.move_completed, 1)
             else:
                 time.sleep(0.1)
