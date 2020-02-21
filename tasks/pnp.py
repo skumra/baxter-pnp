@@ -74,10 +74,16 @@ class PickAndPlace:
         # servo up from current pose
         self.robot.move_to(pose)
 
-    def pick(self, pose):
+    def pick(self, grasp_pose):
         """
         Pick from given pose
         """
+        # Calculate grasp pose
+        pose = get_pose(position=grasp_pose[:3])
+
+        # Apply grasp angle from model output
+        pose = rotate_pose_msg_by_euler_angles(pose, 0.0, 0.0, grasp_pose[3])
+
         # open the gripper
         self.robot.open_gripper()
         # approach to the pose
@@ -123,14 +129,8 @@ class PickAndPlace:
             print('Waiting for grasp pose...')
             while not np.load(self.grasp_available):
                 time.sleep(0.1)
-            gp = np.load(self.grasp_pose)
+            grasp_pose = np.load(self.grasp_pose)
             np.save(self.grasp_available, 0)
-
-            # Calculate grasp pose
-            grasp_pose = get_pose(position=gp[:3])
-
-            # Apply grasp angle from model output
-            grasp_pose = rotate_pose_msg_by_euler_angles(grasp_pose, 0.0, 0.0, gp[3])
 
             # Perform pick
             print('Picking from ', grasp_pose)
