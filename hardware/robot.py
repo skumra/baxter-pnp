@@ -15,7 +15,7 @@ from std_msgs.msg import (
 
 
 class Robot:
-    def __init__(self, workspace_limits=None, limb='left', verbose=True):
+    def __init__(self, workspace_limits=None, limb='right', verbose=True):
         self.workspace_limits = workspace_limits
         self.limb = limb
         self._verbose = verbose
