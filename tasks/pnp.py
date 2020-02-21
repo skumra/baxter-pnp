@@ -105,6 +105,9 @@ class PickAndPlace:
         # Connect to robot
         self.robot.connect()
 
+        # Calibrate gripper
+        self.robot.calibrate_gripper()
+
         # Initialize grasp request and grasp available
         np.save(self.grasp_request, 0)
         np.save(self.grasp_available, 0)

@@ -82,6 +82,10 @@ class Robot:
         self._gripper.open()
         rospy.sleep(1.0)
 
+    def calibrate_gripper(self):
+        """ Calibrate gripper """
+        self._gripper.calibrate()
+
     def move_to(self, pose):
         """ Move robot in cartesian space """
         joint_angles = self._ik_request(pose)
