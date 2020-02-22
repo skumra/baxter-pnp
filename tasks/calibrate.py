@@ -32,7 +32,7 @@ class Calibration:
                 tool_position = np.load(self.tool_position)
                 print('Moving to tool position: ', tool_position)
                 pose = get_pose(position=tool_position)
-                pose_rot = rotate_pose_msg_by_euler_angles(pose, 0, np.pi/3, -np.pi/3)
+                pose_rot = rotate_pose_msg_by_euler_angles(pose, 0, np.pi/2, -np.pi/2)
                 self.robot.move_to(pose_rot)
                 np.save(self.move_completed, 1)
             else:

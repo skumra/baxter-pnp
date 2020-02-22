@@ -14,9 +14,9 @@ class PickAndPlace:
     def __init__(
             self,
             place_position,
-            force_threshold=5,
-            hover_distance=0.15,
-            step_size=0.01,
+            force_threshold=-8,
+            hover_distance=0.1,
+            step_size=0.02,
     ):
         """
 
@@ -42,16 +42,19 @@ class PickAndPlace:
         Move to a pose with a hover-distance above the requested pose and
         then move to the pose incrementally while monitoring the z force
         """
+        print('approaching...')
         approach = copy.deepcopy(pose)
         approach.position.z = approach.position.z + self._hover_distance
         self.robot.move_to(approach)
 
-        while approach.position.z <= pose.position.z:
+        while approach.position.z >= pose.position.z:
             approach.position.z = approach.position.z - self.step_size
             self.robot.move_to(approach)
 
             force = self.robot.get_force()
-            if force.z > self.force_threshold:
+            print('force: ', self.robot.get_force())
+
+            if force.z < self.force_threshold:
                 print(("End Effector Force is: " + str([force.x, force.y, force.z])))
                 print("Max z force reached before reaching the pose")
                 break
