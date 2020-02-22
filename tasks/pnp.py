@@ -49,7 +49,7 @@ class PickAndPlace:
 
         while approach.position.z >= pose.position.z:
             approach.position.z = approach.position.z - self.step_size
-            self.robot.move_to(approach)
+            self.robot.move_to(approach, timeout=1.0)
 
             force = self.robot.get_force()
             print('force: ', self.robot.get_force())

@@ -86,15 +86,15 @@ class Robot:
         """ Calibrate gripper """
         self._gripper.calibrate()
 
-    def move_to(self, pose):
+    def move_to(self, pose, timeout=15.0):
         """ Move robot in cartesian space """
         joint_angles = self._ik_request(pose)
-        self.move_joints(joint_angles)
+        self.move_joints(joint_angles, timeout)
 
-    def move_joints(self, joint_angles):
+    def move_joints(self, joint_angles, timeout):
         """ Move robot in joint space """
         if joint_angles:
-            self._limb.move_to_joint_positions(joint_angles)
+            self._limb.move_to_joint_positions(joint_angles, timeout)
         else:
             rospy.logerr("No Joint Angles provided for move_to_joint_positions. Staying put.")
 
