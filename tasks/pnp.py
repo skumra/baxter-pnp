@@ -107,6 +107,8 @@ class PickAndPlace:
         self._approach(pose)
         # open the gripper
         self.robot.open_gripper()
+        # Get the next grasp pose
+        np.save(self.grasp_request, 1)
         # retract to clear object
         self._retract()
 
@@ -121,14 +123,15 @@ class PickAndPlace:
         np.save(self.grasp_request, 0)
         np.save(self.grasp_available, 0)
 
-        while not rospy.is_shutdown():
-            # Move robot to home pose
-            print('Moving to start position...')
-            self.robot.go_home()
-            self.robot.open_gripper()
+        # Move robot to home pose
+        print('Moving to start position...')
+        self.robot.go_home()
+        self.robot.open_gripper()
 
-            # Get the grasp pose
-            np.save(self.grasp_request, 1)
+        # Get the first grasp pose
+        np.save(self.grasp_request, 1)
+
+        while not rospy.is_shutdown():
             print('Waiting for grasp pose...')
             while not np.load(self.grasp_available):
                 time.sleep(0.1)
