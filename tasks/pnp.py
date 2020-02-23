@@ -15,8 +15,8 @@ class PickAndPlace:
             self,
             place_position,
             force_threshold=-8,
-            hover_distance=0.1,
-            step_size=0.02,
+            hover_distance=0.12,
+            step_size=0.05,
     ):
         """
 
