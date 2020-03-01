@@ -133,7 +133,7 @@ class PickAndPlace:
 
         while not rospy.is_shutdown():
             print('Waiting for grasp pose...')
-            while not np.load(self.grasp_available):
+            while not np.load(self.grasp_available) and not rospy.is_shutdown():
                 time.sleep(0.1)
             grasp_pose = np.load(self.grasp_pose)
             np.save(self.grasp_available, 0)
