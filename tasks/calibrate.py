@@ -23,7 +23,15 @@ class Calibration:
         # Move robot to home pose
         print('Moving to start position...')
         self.robot.go_home()
+
+        # Calibrate gripper
+        self.robot.calibrate_gripper()
+
+        # Allow user to install the checker board
         self.robot.open_gripper()
+        raw_input('Press enter to close gripper..')
+        self.robot.close_gripper()
+        raw_input('Press enter to continue..')
 
         # Move robot to each calibration point in workspace
         print('Collecting data...')
