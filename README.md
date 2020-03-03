@@ -1,4 +1,20 @@
 # Baxter Pick and Place
+This repository contains the implementation of the control module from the paper:
+
+#### Antipodal Robotic Grasping using Generative Residual Convolutional Neural Network
+
+Sulabh Kumra, Shirin Joshi, Ferat Sahin
+
+If you use this project in your research or wish to refer to the baseline results published in the paper, please use the following BibTeX entry:
+
+```
+@article{kumra2019antipodal,
+  title={Antipodal Robotic Grasping using Generative Residual Convolutional Neural Network},
+  author={Kumra, Sulabh and Joshi, Shirin and Sahin, Ferat},
+  journal={arXiv preprint arXiv:1909.04810},
+  year={2019}
+}
+```
 
 ## Prerequisites
 - A developer workstation meeting the minimum system requirements is available for use.
