@@ -5,6 +5,8 @@ This repository contains the implementation of the control module from the paper
 
 Sulabh Kumra, Shirin Joshi, Ferat Sahin
 
+[arxiv](https://arxiv.org/abs/1909.04810)
+
 If you use this project in your research or wish to refer to the baseline results published in the paper, please use the following BibTeX entry:
 
 ```
@@ -20,6 +22,7 @@ If you use this project in your research or wish to refer to the baseline result
 - A developer workstation meeting the minimum system requirements is available for use.
 - The developer workstation has been set up successfully with Ubuntu and ROS - instructions here.
 - You have configured your Development Workstation to access Github. Instructions here.
+- A grasp generator. Our implementation of the GR-ConvNet based grasp generator is available at: https://github.com/skumra/robotic-grasping
 
 ## Installation
 - Download and Install the SDK dependencies
